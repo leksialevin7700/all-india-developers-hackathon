@@ -1,6 +1,6 @@
 # Paralegal Document simplifier📚⚖️
 
-## Project Overview
+##  Overview
 This Legal Document Analyzer is an NLP project demonstrating the application of transformer models for legal document summarization. The project implements two approaches: (1) a fine-tuned BART-based model and (2) a proof-of-concept custom transformer architecture.
 
 ## 🤗 Hugging Face Hosted Model
