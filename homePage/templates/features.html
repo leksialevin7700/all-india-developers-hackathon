@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - Lawyer Connect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a3c6e;
+            --secondary-color: #2a5298;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+            --border-radius-sm: 8px;
+            --glow-color: rgba(59, 130, 246, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        /* Header styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 1.5rem 0;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.025em;
+        }
+        
+        .logo i {
+            margin-right: 0.75rem;
+            color: #ffd700;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.3));
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-sm);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: white;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(34, 197, 94, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 70%, rgba(168, 85, 247, 0.15) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            animation: slideInUp 1s ease-out 0.2s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            font-size: 1.25rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 60px;
+        }
+
+        .feature-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 60px;
+            background: white;
+            border-radius: 24px;
+            padding: 60px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .feature-card.animate {
+            animation: slideInUp 0.8s ease-out forwards;
+        }
+
+        .feature-card:nth-child(even) .feature-visual {
+            order: 2;
+        }
+
+        .feature-card:nth-child(even) .feature-content {
+            order: 1;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-content h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
+        }
+
+        .feature-content p {
+            font-size: 1.1rem;
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .feature-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: #475569;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 1px solid #cbd5e1;
+            transition: all 0.2s ease;
+        }
+
+        .tag:hover {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .feature-visual {
+            position: relative;
+            height: 400px;
+            border-radius: 16px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Animated Visual Elements */
+        .ai-chat {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .chat-message {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 18px;
+            margin-bottom: 10px;
+            max-width: 80%;
+            animation: messageSlide 2s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        .chat-message:nth-child(1) { animation-delay: 0s; }
+        .chat-message:nth-child(2) { animation-delay: 0.5s; }
+        .chat-message:nth-child(3) { animation-delay: 1s; }
+
+        @keyframes messageSlide {
+            0%, 100% { opacity: 0; transform: translateX(-20px); }
+            20%, 80% { opacity: 1; transform: translateX(0); }
+        }
+
+        .document-visual {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            padding: 30px;
+            position: relative;
+        }
+
+        .doc-stack {
+            position: relative;
+        }
+
+        .doc-page {
+            width: 100%;
+            height: 60px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            position: relative;
+            overflow: hidden;
+            animation: docProcess 3s ease-in-out infinite;
+        }
+
+        .doc-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            animation: scanLine 3s ease-in-out infinite;
+        }
+
+        @keyframes scanLine {
+            0%, 100% { width: 0%; }
+            50% { width: 100%; }
+        }
+
+        .case-analysis {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 30px;
+            position: relative;
+        }
+
+        .analysis-node {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            position: absolute;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .analysis-node:nth-child(1) { top: 20%; left: 20%; animation-delay: 0s; }
+        .analysis-node:nth-child(2) { top: 60%; left: 70%; animation-delay: 0.5s; }
+        .analysis-node:nth-child(3) { top: 80%; left: 30%; animation-delay: 1s; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        .connectivity-visual {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .user-avatar, .lawyer-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .lawyer-avatar {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            animation-delay: 1s;
+        }
+
+        .connection-line {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            animation: connectionPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes connectionPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+        }
+
+        .language-visual {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .lang-bubble {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            animation: langFloat 3s ease-in-out infinite;
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .lang-bubble:nth-child(1) { animation-delay: 0s; }
+        .lang-bubble:nth-child(2) { animation-delay: 0.5s; }
+        .lang-bubble:nth-child(3) { animation-delay: 1s; }
+        .lang-bubble:nth-child(4) { animation-delay: 1.5s; }
+        .lang-bubble:nth-child(5) { animation-delay: 2s; }
+        .lang-bubble:nth-child(6) { animation-delay: 2.5s; }
+
+        @keyframes langFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 80px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-card {
+            padding: 40px 20px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .feature-card {
+                grid-template-columns: 1fr;
+                padding: 40px 30px;
+                gap: 40px;
+            }
+
+            .feature-card:nth-child(even) .feature-visual {
+                order: 1;
+            }
+
+            .feature-card:nth-child(even) .feature-content {
+                order: 2;
+            }
+
+            .feature-visual {
+                height: 300px;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <i class="fas fa-balance-scale"></i> LawBot
+                </div>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="{{ url_for('features') }}">Features</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Revolutionary Legal Technology</h1>
+            <p>Experience the future of legal assistance with AI-powered solutions that transform how you access justice</p>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Powerful Features</h2>
+                <p>Discover how our cutting-edge technology is revolutionizing legal assistance and making justice accessible to everyone</p>
+            </div>
+
+            <div class="features-grid">
+                <!-- Feature 1: AI Legal Assistant -->
+                <div class="feature-card">
+                    <div class="feature-content">
+                        <h3>
+                            <div class="feature-icon">🤖</div>
+                            AI-Powered Legal Assistant
+                        </h3>
+                        <p>Our advanced AI chatbot provides instant legal guidance in multiple languages and regional dialects. Get personalized answers to your legal questions, breaking down complex law into understandable advice that applies to your specific situation.</p>
+                        <div class="feature-tags">
+                            <span class="tag">Multilingual Support</span>
+                            <span class="tag">Instant Responses</span>
+                            <span class="tag">24/7 Available</span>
+                            <span class="tag">Context-Aware</span>
+                            <span class="tag">Regional Dialects</span>
+                        </div>
+                    </div>
+                    <div class="feature-visual">
+                        <div class="ai-chat">
+                            <div class="chat-message">What are my rights in this situation?</div>
+                            <div class="chat-message">Based on Indian law, you have several options...</div>
+                            <div class="chat-message">Here's what you should do next...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 2: Document Summarization -->
+                <div class="feature-card">
+                    <div class="feature-content">
+                        <h3>
+                            <div class="feature-icon">📄</div>
+                            Smart Document Analysis
+                        </h3>
+                        <p>Transform complex legal documents into clear, concise summaries. Our AI analyzes contracts, affidavits, agreements, and court declarations, extracting key points and translating legal jargon into plain language that everyone can understand.</p>
+                        <div class="feature-tags">
+                            <span class="tag">Contract Analysis</span>
+                            <span class="tag">Key Point Extraction</span>
+                            <span class="tag">Plain Language</span>
+                            <span class="tag">Risk Assessment</span>
+                            <span class="tag">Quick Processing</span>
+                        </div>
+                    </div>
+                    <div class="feature-visual">
+                        <div class="document-visual">
+                            <div class="doc-stack">
+                                <div class="doc-page"></div>
+                                <div class="doc-page"></div>
+                                <div class="doc-page"></div>
+                                <div class="doc-page"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 3: Case Analysis -->
+                <div class="feature-card">
+                    <div class="feature-content">
+                        <h3>
+                            <div class="feature-icon">⚖️</div>
+                            Intelligent Case Research
+                        </h3>
+                        <p>Describe your legal concerns and receive comprehensive case analysis. Our system searches through precedents, applicable laws, and generates logical arguments to help you understand your legal position and next steps.</p>
+                        <div class="feature-tags">
+                            <span class="tag">Case Precedents</span>
+                            <span class="tag">Legal Citations</span>
+                            <span class="tag">Argument Building</span>
+                            <span class="tag">Decision Support</span>
+                            <span class="tag">Strategy Planning</span>
+                        </div>
+                    </div>
+                    <div class="feature-visual">
+                        <div class="case-analysis">
+                            <div class="analysis-node"></div>
+                            <div class="analysis-node"></div>
+                            <div class="analysis-node"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 4: Lawyer Connectivity -->
+                <div class="feature-card">
+                    <div class="feature-content">
+                        <h3>
+                            <div class="feature-icon">🤝</div>
+                            Seamless Lawyer Connection
+                        </h3>
+                        <p>Connect with qualified lawyers effortlessly through our integrated booking system. Schedule appointments online anytime with automated session management and secure communication channels for professional consultations.</p>
+                        <div class="feature-tags">
+                            <span class="tag">Online Booking</span>
+                            <span class="tag">Verified Lawyers</span>
+                            <span class="tag">Secure Sessions</span>
+                            <span class="tag">Auto Scheduling</span>
+                            <span class="tag">Video Calls</span>
+                        </div>
+                    </div>
+                    <div class="feature-visual">
+                        <div class="connectivity-visual">
+                            <div class="user-avatar">👤</div>
+                            <div class="connection-line"></div>
+                            <div class="lawyer-avatar">👨‍💼</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 5: Multilingual Support -->
+                <div class="feature-card">
+                    <div class="feature-content">
+                        <h3>
+                            <div class="feature-icon">🌍</div>
+                            Universal Language Access
+                        </h3>
+                        <p>Break language barriers with comprehensive support for Hindi, Tamil, Bengali, and other major Indian languages. Our platform ensures everyone can access justice in their mother tongue, making legal help truly inclusive and accessible.</p>
+                        <div class="feature-tags">
+                            <span class="tag">Hindi Support</span>
+                            <span class="tag">Tamil Interface</span>
+                            <span class="tag">Bengali Translation</span>
+                            <span class="tag">Regional Languages</span>
+                            <span class="tag">Cultural Context</span>
+                        </div>
+                    </div>
+                    <div class="feature-visual">
+                        <div class="language-visual">
+                            <div class="lang-bubble">हिंदी</div>
+                            <div class="lang-bubble">தமிழ்</div>
+                            <div class="lang-bubble">বাংলা</div>
+                            <div class="lang-bubble">English</div>
+                            <div class="lang-bubble">മലയാളം</div>
+                            <div class="lang-bubble">తెలుగు</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Legal Queries Resolved</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Verified Lawyers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Languages Supported</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Client Satisfaction</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Add smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add parallax effect to hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Counter animation for stats
+        const animateCounter = (element, target) => {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current).toLocaleString();
+                if (target < 100) {
+                    element.textContent += '%';
+                } else if (target >= 1000) {
+                    element.textContent = Math.floor(current / 1000) + 'K+';
+                }
+            }, 20);
+        };
+
+        // Observe stats section
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumbers = entry.target.querySelectorAll('.stat-number');
+                    statNumbers.forEach(stat => {
+                        const text = stat.textContent;
+                        let target = parseInt(text.replace(/[^\d]/g, ''));
+                        if (text.includes('K')) target *= 1000;
+                        animateCounter(stat, target);
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsSection = document.querySelector('.stats-section');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+    </script>
+</body>
+</html>

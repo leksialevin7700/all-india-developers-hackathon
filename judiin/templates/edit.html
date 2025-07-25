@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile - Lawyer Connect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header styles */
+        header {
+            background: linear-gradient(135deg, #1a3c6e 0%, #2a5298 100%);
+            padding: 22px 0 18px 0;
+            box-shadow: 0 2px 10px rgba(34, 49, 63, 0.07);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+        .logo img { height: 44px; margin-right: 12px; }
+        .logo h2 { color: #fff; font-size: 26px; font-weight: 800; letter-spacing: 2px; }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 26px;
+            font-weight: 600;
+            transition: color 0.18s;
+            font-size: 16px;
+        }
+        .nav-links a:hover { color: #ffd700; }
+        .btn-logout {
+            display: inline-block;
+            padding: 9px 20px;
+            background-color: #d32f2f;
+            color: white;
+            text-decoration: none;
+            border-radius: 22px;
+            font-size: 15px;
+            font-weight: bold;
+            transition: background 0.15s, box-shadow 0.15s;
+            box-shadow: 0 2px 6px rgba(211,47,47,0.12);
+        }
+        .btn-logout:hover {
+            background-color: #b71c1c;
+            box-shadow: 0 4px 12px rgba(211,47,47,0.3);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, #1a3c6e 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(34, 49, 63, 0.07);
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.1;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .form-container {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 48px;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .section-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            color: #3b82f6;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+        }
+        
+        .profile-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 32px;
+        }
+        
+        .profile-upload {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            margin-bottom: 24px;
+        }
+        
+        .profile-pic-container {
+            position: relative;
+        }
+        
+        .profile-pic-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #ffffff;
+            box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        
+        .profile-pic-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .upload-controls {
+            flex: 1;
+        }
+        
+        .upload-controls h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        
+        .upload-controls p {
+            color: #64748b;
+            margin-bottom: 16px;
+            font-size: 0.875rem;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .file-input-custom {
+            background: #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.875rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .file-input-custom:hover {
+            background: #2563eb;
+        }
+        
+        input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        label {
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 0.875rem;
+            display: block;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            background: #ffffff;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            border-color: #3b82f6;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-hint {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+        
+        .statistics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 16px;
+        }
+        
+        .stat-card {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .stat-card label {
+            color: #3b82f6;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        
+        .stat-card input {
+            border: none;
+            background: transparent;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            padding: 0;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .stat-card input:focus {
+            box-shadow: none;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 8px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .checkbox-item:hover {
+            border-color: #3b82f6;
+            background: #f8fafc;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 8px;
+            width: 16px;
+            height: 16px;
+            accent-color: #3b82f6;
+        }
+        
+        .checkbox-item label {
+            font-weight: 500;
+            color: #374151;
+            margin: 0;
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+        
+        .professional-info {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #f59e0b;
+            border-radius: 12px;
+            padding: 24px;
+        }
+        
+        .contact-info {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border: 1px solid #3b82f6;
+            border-radius: 12px;
+            padding: 24px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            padding-top: 32px;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 32px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: #ffffff;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39);
+            min-width: 140px;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px 0 rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #ffffff;
+            color: #374151;
+            padding: 16px 32px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 140px;
+        }
+        
+        .btn-secondary:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+        }
+        
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+            margin: 32px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 15px;
+            }
+            
+            .nav-links a {
+                margin-left: 15px;
+                font-size: 14px;
+            }
+            
+            .logo h2 {
+                font-size: 22px;
+            }
+            
+            .container {
+                margin: 10px;
+                border-radius: 12px;
+            }
+            
+            .page-header {
+                padding: 24px;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .form-container {
+                padding: 24px;
+            }
+            
+            .profile-upload {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .statistics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <img src="/api/placeholder/40/40" alt="Lawyer Connect Logo">
+                <h2>Lawyer Connect</h2>
+            </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Dashboard</a>
+                <a href="#">Cases</a>
+                <a href="#">Messages</a>
+                <a href="#" class="btn-logout">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Edit Your Profile</h1>
+            <p>Update your professional information and credentials</p>
+        </div>
+        
+        <div class="form-container">
+            <form method="POST" action="{{ url_for('edit_profile') }}" enctype="multipart/form-data">
+                
+                <!-- Profile Picture Section -->
+                <div class="profile-section">
+                    <div class="profile-upload">
+                        <div class="profile-pic-container">
+                            <div class="profile-pic-preview">
+                                {% if lawyer.profile_pic %}
+                                    <img src="{{ lawyer.profile_pic }}" alt="Profile Picture">
+                                {% else %}
+                                    <span>⚖</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="upload-controls">
+                            <h3>Profile Picture</h3>
+                            <p>Upload a professional headshot for your profile</p>
+                            <div class="file-input-wrapper">
+    <label class="file-input-custom" for="profile_pic">📁 Choose File</label>
+    <input type="file" name="profile_pic" id="profile_pic" accept="image/*" style="display: none;">
+</div>
+
+                            <div class="form-hint">Recommended: Square format, maximum 2MB</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Professional Information -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon">⚖</div>
+                        <h2 class="section-title">Professional Information</h2>
+                    </div>
+                    
+                    <div class="professional-info">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="specialization">Legal Specialization</label>
+                                <input type="text" id="specialization" name="specialization" value="{{ lawyer.specialization or '' }}" required>
+                                <div class="form-hint">e.g., Criminal Law, Corporate Law, Family Law</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="experience">Years of Experience</label>
+                                <input type="number" id="experience" name="experience" min="0" max="70" value="{{ lawyer.experience or 0 }}" required>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="description">Professional Summary</label>
+                                <textarea id="description" name="description" required>{{ lawyer.description or '' }}</textarea>
+                                <div class="form-hint">Describe your expertise, achievements, and approach to legal practice</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Statistics -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon">📊</div>
+                        <h2 class="section-title">Professional Statistics</h2>
+                    </div>
+                    
+                    <div class="statistics-grid">
+                        <div class="stat-card">
+                            <label for="cases_handled">Total Cases</label>
+                            <input type="number" id="cases_handled" name="cases_handled" min="0" value="{{ lawyer.cases_handled or 0 }}" required>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <label for="successful_cases">Successful Cases</label>
+                            <input type="number" id="successful_cases" name="successful_cases" min="0" value="{{ lawyer.successful_cases or 0 }}" required>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <label for="total_consultations">Total Consultations</label>
+                            <input type="number" id="total_consultations" name="total_consultations" min="0" value="{{ lawyer.total_consultations or 0 }}" required>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <label for="expected_payment">Expected Fee (₹)</label>
+                            <input type="number" id="expected_payment" name="expected_payment" min="0" step="0.01" value="{{ lawyer.expected_payment or '' }}" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Information -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon">📞</div>
+                        <h2 class="section-title">Contact Information</h2>
+                    </div>
+                    
+                    <div class="contact-info">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" value="{{ lawyer.phone or '' }}" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="languages_spoken">Languages Spoken</label>
+                                <input type="text" id="languages_spoken" name="languages_spoken" value="{{ lawyer.languages_spoken or '' }}" required>
+                                <div class="form-hint">Comma-separated (e.g., English, Hindi, Tamil)</div>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="office_address">Office Address</label>
+                                <textarea id="office_address" name="office_address" required>{{ lawyer.office_address or '' }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service Options -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon">⚙</div>
+                        <h2 class="section-title">Service Options</h2>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Consultation Types</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="online" name="consultation_types" value="online"
+                                           {% if lawyer.consultation_types and 'online' in lawyer.consultation_types %}checked{% endif %}>
+                                    <label for="online">Online</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="in_person" name="consultation_types" value="in_person"
+                                           {% if lawyer.consultation_types and 'in_person' in lawyer.consultation_types %}checked{% endif %}>
+                                    <label for="in_person">In-Person</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="phone_consultation" name="consultation_types" value="phone"
+                                           {% if lawyer.consultation_types and 'phone' in lawyer.consultation_types %}checked{% endif %}>
+                                    <label for="phone_consultation">Phone Call</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="availability_hours">Availability Hours</label>
+                            <input type="text" id="availability_hours" name="availability_hours" value="{{ lawyer.availability_hours or '' }}" required>
+                            <div class="form-hint">e.g., Monday-Friday 9:00 AM - 6:00 PM</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                    <a href="{{ url_for('profile') }}" class="btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Profile picture preview
+        document.getElementById('profile_pic').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.querySelector('.profile-pic-preview');
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Profile Preview">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Form validation
+        document.getElementById('successful_cases').addEventListener('input', function() {
+            const totalCases = parseInt(document.getElementById('cases_handled').value) || 0;
+            const successfulCases = parseInt(this.value) || 0;
+            
+            if (successfulCases > totalCases) {
+                this.setCustomValidity('Successful cases cannot exceed total cases handled');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+        
+        document.getElementById('cases_handled').addEventListener('input', function() {
+            const successfulCasesInput = document.getElementById('successful_cases');
+            const totalCases = parseInt(this.value) || 0;
+            const successfulCases = parseInt(successfulCasesInput.value) || 0;
+            
+            if (successfulCases > totalCases) {
+                successfulCasesInput.setCustomValidity('Successful cases cannot exceed total cases handled');
+            } else {
+                successfulCasesInput.setCustomValidity('');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile - Lawyer Connect</title>
+    <style>
+        /* Base styles and reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(120deg, #f5f7fa 0%, #e8ecf1 100%);
+            color: #25314c;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        /* Header styles */
+        header {
+            background: linear-gradient(135deg, #1a3c6e 0%, #2a5298 100%);
+            padding: 22px 0 18px 0;
+            box-shadow: 0 2px 10px rgba(34, 49, 63, 0.07);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+        .logo img { height: 44px; margin-right: 12px; }
+        .logo h2 { color: #fff; font-size: 26px; font-weight: 800; letter-spacing: 2px; }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 26px;
+            font-weight: 600;
+            transition: color 0.18s;
+            font-size: 16px;
+        }
+        .nav-links a:hover { color: #ffd700; }
+        .btn-logout {
+            display: inline-block;
+            padding: 9px 20px;
+            background-color: #d32f2f;
+            color: white;
+            text-decoration: none;
+            border-radius: 22px;
+            font-size: 15px;
+            font-weight: bold;
+            transition: background 0.15s, box-shadow 0.15s;
+            box-shadow: 0 2px 6px rgba(211,47,47,0.12);
+        }
+        .btn-logout:hover { background: #b71c1c; color: #fff; }
+        /* Container and card */
+        .container {
+            max-width: 1100px;
+            margin: 56px auto 0 auto;
+            padding: 0 16px 40px 16px;
+            flex-grow: 1;
+        }
+        .profile-header {
+            background: linear-gradient(90deg, #1a3c6e 80%, #4776e6 100%);
+            padding: 44px 40px 30px 40px;
+            border-radius: 11px 11px 0 0;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 28px 0 rgba(56,92,182,0.09);
+            flex-wrap: wrap;
+        }
+        .profile-header-content {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            flex-basis: 0;
+            min-width: 0;
+        }
+        .profile-header-info {
+            margin-left: 32px;
+            min-width: 260px;
+            flex-grow: 1;
+        }
+        .profile-header-info h2 {
+            font-size: 33px;
+            margin-bottom: 4px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            word-break: break-word;
+        }
+        .profile-header-info p {
+            font-size: 20px;
+            font-weight: 400;
+            opacity: 0.93;
+            word-break: break-word;
+        }
+        .profile-picture {
+            width: 128px; height: 128px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 0 4px 16px rgba(56,92,182,0.09);
+            background: #f0f0f0;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            font-size: 44px;
+            flex-shrink: 0;
+        }
+        .profile-picture img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-picture-placeholder {
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            background: #e9ecef;
+            color: #6c757d;
+            font-size: 52px;
+        }
+        /* Profile Content Card */
+        .profile-content {
+            background: white;
+            padding: 48px 38px;
+            border-radius: 0 0 13px 13px;
+            box-shadow: 0 8px 36px rgba(26, 60, 110, 0.10);
+            margin-bottom: 34px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        .profile-section { margin-bottom: 0; }
+        .profile-section h3 {
+            color: #25314c;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e7eaf6;
+        }
+        .profile-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .info-item { margin-bottom: 0; }
+        .info-item label {
+            font-weight: 700;
+            margin-bottom: 3px;
+            color: #4a5576;
+            font-size: 15px;
+            display: block;
+            letter-spacing: .02em;
+        }
+        .info-item p {
+            color: #222c3c;
+            font-size: 16.5px;
+            font-weight: 400;
+            margin-left: 2px;
+            word-break: break-word;
+        }
+        .info-item p.empty-field {
+            color: #b0b5c7;
+            font-style: italic;
+        }
+        .info-item ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 5px;
+        }
+        .info-item ul li {
+            color: #222c3c;
+            font-size: 16.5px;
+            font-weight: 400;
+            margin-bottom: 3px;
+            position: relative;
+            padding-left: 15px;
+        }
+        .info-item ul li::before {
+            content: '•';
+            color: #355caa;
+            position: absolute;
+            left: 0;
+            font-size: 1.1em;
+            line-height: 1;
+        }
+
+        .full-width { grid-column: 1 / -1; }
+        /* Form styles */
+        .profile-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            background: #f7f9fc;
+            border-radius: 8px;
+            padding: 24px 18px;
+            box-shadow: 0 2px 12px rgba(60, 70, 110, 0.03);
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #3d4660;
+            font-size: 15px;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid #e2e6ec;
+            border-radius: 6px;
+            font-size: 15px;
+            background: #fff;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-group textarea { min-height: 110px; resize: vertical; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            border-color: #355caa;
+            box-shadow: 0 0 0 2px #dbe8fa;
+            outline: none;
+        }
+        .form-hint {
+            font-size: 11.5px;
+            color: #909ec2;
+            margin-top: 1px;
+        }
+        .profile-pic-upload { margin-top: 8px; }
+        .profile-pic-label {
+            font-weight: bold;
+        }
+        .custom-file-upload {
+            display: inline-block;
+            padding: 8px 12px;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            border: 1.5px solid #c6c8ca;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-weight: 500;
+        }
+        .custom-file-upload:hover { background-color: #e7eaf6; }
+        input[type="file"] { display: none; }
+        .selected-file-name { margin-left: 10px; font-size: 13px; color: #6c757d; }
+        .checkbox-group { display: flex; flex-direction: column; gap: 7px; }
+        .checkbox-item { display: flex; align-items: center; }
+        .checkbox-item input[type="checkbox"] { width: auto; margin-right: 8px; }
+        /* Buttons */
+        .btn-submit {
+            grid-column: 1 / -1;
+            padding: 15px 0;
+            background: linear-gradient(98deg, #355caa 0%, #2a5298 90%);
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 7px;
+            transition: background 0.22s, box-shadow 0.22s;
+            box-shadow: 0 2px 14px rgba(42,82,152,0.08);
+        }
+        .btn-submit:hover { background: linear-gradient(98deg, #2a5298 0%, #355caa 90%); }
+        .btn-sm { padding: 5px 11px; font-size: 13px; }
+        .btn-danger {
+            background: #d32f2f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-danger:hover { background: #b71c1c; }
+        .btn-secondary {
+            background: #4a5576;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 15px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .btn-secondary:hover { background: #25314c; }
+        /* Flash messages */
+        .flash-messages { margin-bottom: 18px; }
+        .flash-message {
+            padding: 14px 18px;
+            border-radius: 5px;
+            margin-bottom: 9px;
+            font-weight: 500;
+        }
+        .flash-success { background-color: #e7fced; color: #248b5f; }
+        .flash-danger { background-color: #ffe3e3; color: #a82e2e; }
+        .flash-warning { background-color: #fffbe5; color: #b09522; }
+        /* Meet links */
+        .meet-links-container { display: flex; flex-direction: column; gap: 7px; }
+        .meet-link-item { display: flex; align-items: center; }
+        .meet-link { color: #355caa; text-decoration: none; word-break: break-all; }
+        .meet-link:hover { text-decoration: underline; }
+        .meet-links-actions { margin-top: 8px; }
+        .inline-form { display: inline-block; margin-right: 10px; margin-bottom: 10px; }
+        .meet-links-list {
+            margin-top: 10px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 9px 10px 5px 10px;
+            background: #f4f6fa;
+        }
+        .meet-link-manage-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e6e9f0;
+        }
+        .meet-link-manage-item:last-child { border-bottom: none; }
+        .meet-link-text { word-break: break-all; margin-right: 10px; flex: 1; font-size: 15px; }
+        /* Footer stats & charts */
+        .profile-footer {
+            background: #fff;
+            padding: 32px 28px 36px 28px;
+            border-radius: 12px;
+            margin-top: 32px;
+            box-shadow: 0 8px 32px rgba(26, 60, 110, 0.09);
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+            gap: 23px;
+            text-align: center;
+        }
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(97deg, #f7fafc 70%, #e7eaf6 100%);
+            border-radius: 8px;
+            padding: 20px 0 10px 0;
+            min-height: 82px;
+            box-shadow: 0 2px 6px rgba(26, 60, 110, 0.045);
+        }
+        .stat-value {
+            font-size: 27px;
+            font-weight: 800;
+            color: #355caa;
+        }
+        .stat-label {
+            font-size: 15px;
+            margin-top: 4px;
+            color: #4a5576;
+            font-weight: 600;
+            letter-spacing: .01em;
+        }
+        
+        /* Charts Container */
+        .charts-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .chart-container {
+            background: linear-gradient(110deg, #f7fafc 70%, #e7eaf6 100%);
+            border-radius: 13px;
+            box-shadow: 0 2px 10px rgba(34, 49, 63, 0.10);
+            padding: 25px;
+            height: 350px;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 900px) {
+            .container { margin: 38px 8px; padding: 0 8px 40px 8px; }
+            .profile-header { flex-direction: column; text-align: center; padding: 36px 18px; align-items: center; }
+            .profile-header-content { flex-direction: column; margin-bottom: 18px; text-align: center; }
+            .profile-header-info { margin-left: 0; margin-top: 15px; text-align: center; min-width: unset; }
+            .profile-content { padding: 30px 18px; }
+            .profile-form, .profile-info-grid { grid-template-columns: 1fr; }
+            .navbar { flex-direction: column; text-align: center; }
+            .nav-links { margin-top: 16px; display: flex; flex-wrap: wrap; justify-content: center; }
+            .nav-links a { margin: 0 10px 10px 10px; }
+            .btn-logout { margin-top: 10px; }
+            .profile-stats { grid-template-columns: 1fr 1fr; gap: 15px; }
+            .charts-section { grid-template-columns: 1fr; gap: 20px; }
+            .chart-container { height: 300px; }
+        }
+        @media (max-width: 600px) {
+            .profile-header { padding: 24px 10px; }
+            .profile-content { padding: 20px 10px; }
+            .profile-footer { padding: 20px 10px; }
+            .profile-header-info h2 { font-size: 28px; }
+            .profile-header-info p { font-size: 18px; }
+            .profile-section h3 { font-size: 20px; }
+            .info-item label { font-size: 14px; }
+            .info-item p { font-size: 15px; }
+            .btn-submit { padding: 12px 0; font-size: 16px; }
+            .navbar .logo h2 { font-size: 22px; }
+            .profile-picture { width: 100px; height: 100px; font-size: 38px;}
+            .chart-container { height: 280px; }
+        }
+        @media (max-width: 400px) {
+            .profile-stats { grid-template-columns: 1fr; }
+            .nav-links a { margin: 0 8px 8px 8px; }
+            .chart-container { height: 250px; }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show filename when file is selected
+            const fileInput = document.getElementById('profile_pic');
+            if (fileInput) {
+                fileInput.addEventListener('change', function() {
+                    const fileName = this.files[0] ? this.files[0].name : 'No file chosen';
+                    document.getElementById('file-name').textContent = fileName;
+                });
+            }
+
+            // Fetch data from backend
+            const casesHandled = {{ lawyer.cases_handled if lawyer.cases_handled else 0 }};
+            const successfulCases = {{ lawyer.successful_cases if lawyer.successful_cases else 0 }};
+            const totalConsultations = {{ lawyer.total_consultations if lawyer.total_consultations else 0 }};
+            const averageRating = {{ lawyer.average_rating if lawyer.average_rating else 0 }};
+            const successRate = casesHandled > 0 ? ((successfulCases / casesHandled) * 100).toFixed(1) : 0;
+
+            // Chart 1: Cases and Consultations (Count-based metrics)
+            const ctx1 = document.getElementById('metricsChart');
+            if (ctx1) {
+                const metricsChart = new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Cases Handled', 'Successful Cases', 'Total Consultations'],
+                        datasets: [{
+                            label: 'Count',
+                            data: [casesHandled, successfulCases, totalConsultations],
+                            backgroundColor: [
+                                'rgba(53,92,170,0.85)',
+                                'rgba(82,124,219,0.85)', 
+                                'rgba(180,104,255,0.85)'
+                            ],
+                            borderColor: [
+                                'rgba(53,92,170,1)',
+                                'rgba(82,124,219,1)',
+                                'rgba(180,104,255,1)'
+                            ],
+                            borderWidth: 2,
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Professional Metrics',
+                                font: { size: 18, weight: 'bold' },
+                                color: '#355caa',
+                                padding: { bottom: 16 }
+                            },
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#355caa',
+                                titleColor: '#fff',
+                                bodyColor: '#fff',
+                                borderColor: '#fff',
+                                borderWidth: 1
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: '#e0e0e0' },
+                                ticks: { color: '#4a5576', font: { weight: 'bold' } }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: '#25314c', font: { weight: 600 } }
+                            }
+                        },
+                        animation: {
+                            duration: 1000,
+                            easing: 'easeOutBounce'
+                        }
+                    }
+                });
+            }
+
+            // Chart 2: Success Rate and Rating (Percentage/Rating metrics)
+            const ctx2 = document.getElementById('ratingsChart');
+            if (ctx2) {
+                const ratingsChart = new Chart(ctx2, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Success Rate', 'Average Rating (out of 5)'],
+                        datasets: [{
+                            data: [successRate, (averageRating * 20)], // Convert rating to percentage for visual consistency
+                            backgroundColor: [
+                                'rgba(33,195,160,0.85)',
+                                'rgba(255,193,7,0.85)'
+                            ],
+                            borderColor: [
+                                'rgba(33,195,160,1)',
+                                'rgba(255,193,7,1)'
+                            ],
+                            borderWidth: 3,
+                            cutout: '60%'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Success & Rating Metrics',
+                                font: { size: 18, weight: 'bold' },
+                                color: '#355caa',
+                                padding: { bottom: 16 }
+                            },
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: { size: 12, weight: 'bold' },
+                                    color: '#25314c',
+                                    padding: 15
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: '#355caa',
+                                titleColor: '#fff',
+                                bodyColor: '#fff',
+                                borderColor: '#fff',
+                                borderWidth: 1,
+                                callbacks: {
+                                    label: function(context) {
+                                        if (context.label === 'Success Rate') {
+                                            return 'Success Rate: ' + successRate + '%';
+                                        } else {
+                                            return 'Average Rating: ' + averageRating + '/5';
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        animation: {
+                            animateRotate: true,
+                            duration: 1200,
+                            easing: 'easeInOutQuart'
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <img src="/api/placeholder/40/40" alt="Lawyer Connect Logo">
+                <h2>Lawyer Connect</h2>
+            </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Dashboard</a>
+                <a href="#">Cases</a>
+                <a href="#">Messages</a>
+                <a href="#" class="btn-logout">Logout</a>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="profile-header">
+            <div class="profile-header-content">
+                <div class="profile-picture">
+                    {% if lawyer.profile_pic %}
+                        <img src="{{ lawyer.profile_pic }}" alt="{{ lawyer.name }}'s profile picture">
+                    {% else %}
+                        <div class="profile-picture-placeholder">
+                            {{ lawyer.name[0].upper() if lawyer.name else '?' }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="profile-header-info">
+                    <h2>{{ lawyer.name if lawyer.name else 'Name not provided' }}</h2>
+                    <p>{{ lawyer.specialization if lawyer.specialization else 'Specialization not specified' }} Attorney</p>
+                    {% if lawyer.experience %}
+                        <p>{{ lawyer.experience }} Years Experience</p>
+                    {% endif %}
+                </div>
+            </div>
+            <a href="{{ url_for('edit_profile') }}" class="btn btn-secondary" style="
+                background: linear-gradient(98deg, #355caa 0%, #2a5298 90%);
+                color: #fff;
+                padding: 12px 28px;
+                border-radius: 8px;
+                font-size: 16px;
+                font-weight: 600;
+                text-decoration: none;
+                box-shadow: 0 2px 8px rgba(42,82,152,0.07);
+                transition: background 0.18s;
+                display: inline-block;
+                margin-top: 10px;"
+            >Edit Profile</a>
+        </div>
+        <div class="profile-content">
+            <div class="profile-section">
+                <h3>Professional Information</h3>
+                <div class="profile-info-grid">
+                    <div class="info-item">
+                        <label>Email</label>
+                        <p>{{ lawyer.email if lawyer.email else 'Not provided' }}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Phone</label>
+                        <p>{{ lawyer.phone if lawyer.phone else 'Not provided' }}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Bar Council ID</label>
+                        <p>{{ lawyer.bar_council_id if lawyer.bar_council_id else 'Not provided' }}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Specialization</label>
+                        <p>{{ lawyer.specialization if lawyer.specialization else 'Not specified' }}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Years of Experience</label>
+                        <p>{{ lawyer.experience if lawyer.experience else 'Not specified' }}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Cases Handled</label>
+                        <p>{{ lawyer.cases_handled if lawyer.cases_handled else 'Not specified' }}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Successful Cases</label>
+                        <p>{{ lawyer.successful_cases if lawyer.successful_cases else 'Not specified' }}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Success Rate</label>
+                        {% if lawyer.cases_handled and lawyer.successful_cases and lawyer.cases_handled > 0 %}
+                            <p>{{ "%.1f"|format((lawyer.successful_cases / lawyer.cases_handled) * 100) }}%</p>
+                        {% else %}
+                            <p class="empty-field">Not calculated</p>
+                        {% endif %}
+                    </div>
+                    <div class="info-item">
+                        <label>Total Consultations</label>
+                        <p>{{ lawyer.total_consultations if lawyer.total_consultations else 'Not specified' }}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Expected Payment</label>
+                        <p>{{ '₹{}'.format(lawyer.expected_payment) if lawyer.expected_payment else 'Not specified' }}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Languages Spoken</label>
+                        {% if lawyer.languages_spoken %}
+                            <ul>
+                                {% for lang in lawyer.languages_spoken.split(',') %}
+                                    <li>{{ lang.strip() }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="empty-field">Not specified</p>
+                        {% endif %}
+                    </div>
+                    <div class="info-item full-width">
+                        <label>Office Address</label>
+                        <p>{{ lawyer.office_address if lawyer.office_address else 'Not provided' }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-section">
+                <h3>Professional Bio</h3>
+                <div class="bio-content">
+                    <p>{{ lawyer.description if lawyer.description else 'Professional bio not provided yet. Please update your profile to add your professional background and expertise.' }}</p>
+                </div>
+            </div>
+        </div>
+          {# The "Edit Profile" button was moved to the header for better context. This section is now purely for managing links. #}
+            <div class="profile-section">
+                <h3>Manage Consultation Links</h3>
+                <div class="meet-links-actions">
+                    <form method="POST" action="{{ url_for('add_meet_link') }}" class="inline-form">
+                        <button type="submit" class="btn btn-secondary">Generate New Meet Link</button>
+                    </form>
+                    {% if lawyer.meet_links and lawyer.meet_links|length > 0 %}
+                        <div class="meet-links-list">
+                            {% for link in lawyer.meet_links %}
+                                <div class="meet-link-manage-item">
+                                    <span class="meet-link-text">{{ link }}</span>
+                                    <form method="POST" action="{{ url_for('remove_meet_link', link=link) }}" class="inline-form">
+                                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                    </form>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="profile-footer">
+            <div class="profile-stats">
+                <div class="stat">
+                    <span class="stat-value">{{ lawyer.cases_handled if lawyer.cases_handled else 0 }}</span>
+                    <span class="stat-label">Cases Handled</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">{{ lawyer.successful_cases if lawyer.successful_cases else 0 }}</span>
+                    <span class="stat-label">Successful Cases</span>
+                </div>
+                <div class="stat">
+                    {% if lawyer.cases_handled and lawyer.successful_cases and lawyer.cases_handled > 0 %}
+                        <span class="stat-value">{{ "%.1f"|format((lawyer.successful_cases / lawyer.cases_handled) * 100) }}%</span>
+                    {% else %}
+                        <span class="stat-value">0%</span>
+                    {% endif %}
+                    <span class="stat-label">Success Rate</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">{{ lawyer.total_consultations if lawyer.total_consultations else 0 }}</span>
+                    <span class="stat-label">Total Consultations</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">{{ lawyer.average_rating if lawyer.average_rating else '0.0' }} / 5</span>
+                    <span class="stat-label">Avg. Rating</span>
+                </div>
+            </div>
+            <div class="charts-section">
+                <div class="chart-container">
+                    <canvas id="metricsChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="ratingsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

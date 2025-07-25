@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal AI Summarizer & Simplifier</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+    :root {
+      --primary-color: #1a365d;
+      --secondary-color: #3182ce;
+      --accent-color: #e53e3e;
+      --success-color: #38a169;
+      --warning-color: #dd6b20;
+      --light-bg: #f7fafc;
+      --card-bg: #ffffff;
+      --text-primary: #1a202c;
+      --text-secondary: #718096;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+      --border-radius: 16px;
+      --border-radius-sm: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --glass-bg: rgba(255, 255, 255, 0.95);
+      --glass-border: rgba(255, 255, 255, 0.2);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    
+    body {
+      background-color: var(--light-bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: linear-gradient(135deg, var(--light-bg) 0%, #edf2f7 100%);
+    }
+    
+    header {
+      background-color: var(--primary-color);
+      padding: 1.5rem 0;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      color: white;
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      letter-spacing: -0.025em;
+    }
+    
+    .logo i {
+      margin-right: 0.5rem;
+      color: var(--secondary-color);
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius-sm);
+    }
+    
+    .nav-links a:hover {
+      color: var(--secondary-color);
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    main {
+      flex: 1;
+      padding: 2rem 0;
+    }
+
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-lg);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .summarizer-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .input-section, .output-section {
+      transition: var(--transition);
+    }
+
+    .input-section:hover, .output-section:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    h2 {
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      position: relative;
+      display: inline-block;
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: -0.025em;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+      border-radius: 2px;
+    }
+
+    textarea, .summary-output {
+      width: 100%;
+      min-height: 300px;
+      padding: 1.25rem;
+      border-radius: var(--border-radius-sm);
+      border: 2px solid var(--border-color);
+      resize: none;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      background-color: var(--card-bg);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      font-family: inherit;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+    }
+
+    .summary-output {
+      background-color: var(--card-bg);
+      overflow-y: auto;
+      color: var(--text-primary);
+    }
+
+    .summary-output ul {
+      padding-left: 1.5rem;
+    }
+
+    .summary-output li {
+      margin-bottom: 1.2rem;
+      position: relative;
+      padding-left: 0.5rem;
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+
+    .summary-output li::marker {
+      color: var(--secondary-color);
+      font-size: 1.2em;
+    }
+
+    .controls {
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.875rem 1.75rem;
+      border-radius: var(--border-radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .btn:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-accent {
+      background-color: var(--accent-color);
+    }
+
+    .btn-accent:hover {
+      background-color: #c53030;
+    }
+
+    .btn-success {
+      background-color: var(--success-color);
+    }
+
+    .btn-success:hover {
+      background-color: #2f855a;
+    }
+
+    .file-drop {
+      border: 2px dashed var(--border-color);
+      border-radius: var(--border-radius-sm);
+      padding: 2.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      transition: var(--transition);
+      cursor: pointer;
+      background-color: var(--card-bg);
+    }
+
+    .file-drop:hover {
+      border-color: var(--secondary-color);
+      background-color: rgba(49, 130, 206, 0.05);
+    }
+
+    .file-drop i {
+      font-size: 2.5rem;
+      color: var(--secondary-color);
+      margin-bottom: 1rem;
+    }
+
+    .file-drop p {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .statistics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      padding: 1.5rem;
+      background: var(--light-bg);
+      border-radius: var(--border-radius-sm);
+      margin-bottom: 1rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 0.5rem;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      line-height: 1.2;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-top: 0.25rem;
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 3rem;
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+    }
+
+    .loading i {
+      font-size: 2.5rem;
+      color: var(--secondary-color);
+      animation: spin 1s linear infinite;
+      margin-bottom: 1rem;
+    }
+
+    .loading p {
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    footer {
+      background-color: var(--primary-color);
+      color: white;
+      text-align: center;
+      padding: 2rem 0;
+      margin-top: auto;
+    }
+
+    footer p {
+      opacity: 0.9;
+      font-weight: 500;
+    }
+
+    .warning {
+      background-color: #fed7d7;
+      border: 1px solid #feb2b2;
+      color: #9b2c2c;
+      padding: 1rem;
+      border-radius: var(--border-radius-sm);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+    }
+
+    .warning i {
+      color: var(--accent-color);
+    }
+
+    .results-section {
+      margin-top: 2rem;
+    }
+
+    .summary-box {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-lg);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: var(--transition);
+    }
+
+    .summary-box:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .summary-box h3 {
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-weight: 700;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .summary-box h3 i {
+      color: var(--secondary-color);
+    }
+
+    .summary-content {
+      color: var(--text-primary);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .summarizer-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .statistics {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .controls {
+        flex-direction: column;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    /* Enhanced focus states for accessibility */
+    .btn:focus,
+    .file-drop:focus {
+      outline: 2px solid var(--secondary-color);
+      outline-offset: 2px;
+    }
+
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Selection styling */
+    ::selection {
+      background-color: var(--secondary-color);
+      color: white;
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="nav">
+                <a href="#" class="logo">
+                    <i class="fas fa-balance-scale"></i>
+                    LegalAI Summarizer
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-file-alt"></i> Documents</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="glass-card">
+                <div class="summarizer-container">
+                    <div class="input-section glass-card">
+                        <h2><i class="fas fa-file-text"></i> Input Document</h2>
+                        
+                        <form method="POST">
+                            <div class="file-drop" onclick="document.getElementById('file-input').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to upload a legal document or paste text below</p>
+                                <input type="file" id="file-input" style="display: none;" accept=".txt,.pdf,.doc,.docx">
+                            </div>
+
+                            <label for="input_text" style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem; display: block;">
+                                <i class="fas fa-edit"></i> Enter Legal Text:
+                            </label>
+                            <textarea 
+                                name="input_text" 
+                                id="input_text"
+                                placeholder="Paste your legal document text here for AI-powered summarization and simplification..."
+                                required>{{ request.form.get('input_text', '') if request else '' }}</textarea>
+                            
+                            <div class="controls">
+                                <button class="btn" type="submit">
+                                    <i class="fas fa-magic"></i>
+                                    Summarize & Simplify
+                                </button>
+                                <button class="btn btn-accent" type="button" onclick="clearText()">
+                                    <i class="fas fa-trash"></i>
+                                    Clear
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="statistics">
+                            <div class="stat-item">
+                                <div class="stat-value" id="word-count">0</div>
+                                <div class="stat-label">Words</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="char-count">0</div>
+                                <div class="stat-label">Characters</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="read-time">0</div>
+                                <div class="stat-label">Min Read</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="complexity">Low</div>
+                                <div class="stat-label">Complexity</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="output-section glass-card">
+                        <h2><i class="fas fa-lightbulb"></i> AI Analysis</h2>
+                        
+                        {% if warning %}
+                            <div class="warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                {{ warning }}
+                            </div>
+                        {% endif %}
+
+                        <div class="loading" id="loading">
+                            <i class="fas fa-cog"></i>
+                            <p>Processing your legal document...</p>
+                        </div>
+
+                        <div class="results-section">
+                            {% if summary %}
+                                <div class="summary-box">
+                                    <h3><i class="fas fa-compress-alt"></i> Professional Summary</h3>
+                                    <div class="summary-content">{{ summary }}</div>
+                                </div>
+                            {% endif %}
+
+                            {% if easy_summary %}
+                                <div class="summary-box">
+                                    <h3><i class="fas fa-user-friends"></i> Simplified Version</h3>
+                                    <div class="summary-content">{{ easy_summary }}</div>
+                                </div>
+                            {% endif %}
+
+                            {% if not summary and not easy_summary and not warning %}
+                                <div class="summary-output">
+                                    <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                                        <i class="fas fa-robot" style="font-size: 3rem; margin-bottom: 1rem; color: var(--secondary-color);"></i>
+                                        <p>Your AI-powered legal analysis will appear here once you submit a document.</p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 LegalAI Summarizer. Empowering legal understanding through artificial intelligence.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Text statistics
+        function updateStats() {
+            const text = document.getElementById('input_text').value;
+            const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
+            const charCount = text.length;
+            const readTime = Math.ceil(wordCount / 200);
+            
+            // Simple complexity measure based on average word length
+            const avgWordLength = wordCount > 0 ? charCount / wordCount : 0;
+            const complexity = avgWordLength > 6 ? 'High' : avgWordLength > 4 ? 'Medium' : 'Low';
+            
+            document.getElementById('word-count').textContent = wordCount;
+            document.getElementById('char-count').textContent = charCount;
+            document.getElementById('read-time').textContent = readTime;
+            document.getElementById('complexity').textContent = complexity;
+        }
+
+        // Clear text function
+        function clearText() {
+            document.getElementById('input_text').value = '';
+            updateStats();
+        }
+
+        // Loading animation
+        document.querySelector('form').addEventListener('submit', function() {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+        });
+
+        // Update stats on input
+        document.getElementById('input_text').addEventListener('input', updateStats);
+
+        // Initialize stats
+        updateStats();
+
+        // File upload handling (placeholder - you'll need to implement server-side file processing)
+        document.getElementById('file-input').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // This is a placeholder - you'd need to implement file reading
+                alert('File upload feature coming soon! Please paste your text directly for now.');
+            }
+        });
+    </script>
+</body>
+</html>

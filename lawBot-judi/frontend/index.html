@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LegalCounsel Pro - Advanced Case Analysis Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #3182ce;
+            --accent-color: #e53e3e;
+            --success-color: #38a169;
+            --warning-color: #dd6b20;
+            --light-bg: #f7fafc;
+            --card-bg: #ffffff;
+            --text-primary: #1a202c;
+            --text-secondary: #718096;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --border-radius: 16px;
+            --border-radius-sm: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--light-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            font-weight: 400;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            font-family: var(--font-serif);
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            color: var(--card-bg);
+            font-size: 1.25rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 0.025em;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1.5rem;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--secondary-color);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Header Section */
+        .header-section {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 4rem 2rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+        }
+
+        .header-title {
+            font-family: var(--font-serif);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .header-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .credentials-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .credential-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .credential-icon {
+            width: 20px;
+            height: 20px;
+            color: var(--secondary-color);
+        }
+
+        /* Input Section */
+        .input-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 3rem;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 2rem 2.5rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--card-bg);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .section-description {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-top: 0.25rem;
+        }
+
+        .input-form {
+            padding: 2.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            letter-spacing: 0.025em;
+        }
+
+        .form-textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 1.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--card-bg);
+            resize: vertical;
+            transition: var(--transition);
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+        }
+
+        .form-textarea::placeholder {
+            color: var(--text-secondary);
+            font-style: normal;
+        }
+
+        .character-count {
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            color: var(--card-bg);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: var(--border-radius-sm);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 2rem auto 0;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            letter-spacing: 0.025em;
+            min-width: 220px;
+            justify-content: center;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .submit-button:active {
+            transform: translateY(0);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Results Section */
+        .results-section {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.6s ease forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .results-container {
+            display: grid;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .result-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .result-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .result-header {
+            padding: 1.5rem 2rem;
+            background: var(--light-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .result-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--secondary-color);
+            color: var(--card-bg);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .result-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .result-content {
+            padding: 2rem;
+        }
+
+        .result-text {
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .result-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .result-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .result-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+            width: 6px;
+            height: 6px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 6rem;
+            padding: 3rem 2rem;
+            background: var(--primary-color);
+            color: var(--card-bg);
+            text-align: center;
+            border-radius: var(--border-radius);
+        }
+
+        .footer-brand {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* Loading State */
+        .loading .submit-button {
+            background: var(--text-secondary);
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .nav-container {
+                padding: 1rem;
+            }
+            
+            .main-container {
+                padding: 2rem 1rem;
+            }
+            
+            .header-title {
+                font-size: 2.75rem;
+            }
+            
+            .credentials-bar {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .header-title {
+                font-size: 2.25rem;
+            }
+            
+            .header-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-header {
+                padding: 1.5rem;
+            }
+            
+            .input-form {
+                padding: 1.5rem;
+            }
+            
+            .result-content {
+                padding: 1.5rem;
+            }
+            
+            .submit-button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-section {
+                padding: 2rem 1rem;
+            }
+            
+            .header-title {
+                font-size: 2rem;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.75rem;
+            }
+            
+            .form-textarea {
+                min-height: 150px;
+                padding: 1.25rem;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="brand">
+                <div class="brand-icon">
+                    <i class="fas fa-balance-scale"></i>
+                </div>
+                LegalCounsel Pro
+            </a>
+            <div class="nav-links">
+                <a href="#" class="nav-link active">Case Analysis</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header Section -->
+        <header class="header-section">
+            <h1 class="header-title">Advanced Legal Case Analysis</h1>
+            <p class="header-subtitle">
+                Leverage cutting-edge AI technology to build compelling legal arguments, 
+                identify key precedents, and develop strategic case approaches with professional-grade analysis.
+            </p>
+            <div class="credentials-bar">
+                <div class="credential-item">
+                    <i class="fas fa-shield-check credential-icon"></i>
+                    <span>Attorney-Client Privilege Protected</span>
+                </div>
+                <div class="credential-item">
+                    <i class="fas fa-university credential-icon"></i>
+                    <span>Bar Association Certified</span>
+                </div>
+                <div class="credential-item">
+                    <i class="fas fa-lock credential-icon"></i>
+                    <span>End-to-End Encryption</span>
+                </div>
+                <div class="credential-item">
+                    <i class="fas fa-gavel credential-icon"></i>
+                    <span>Legal Professional Standards</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Input Section -->
+        <section class="input-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-file-signature"></i>
+                </div>
+                <div>
+                    <h2 class="section-title">Case Information Input</h2>
+                    <p class="section-description">Provide comprehensive case details for thorough legal analysis</p>
+                </div>
+            </div>
+            
+            <form class="input-form" action="/process_case" method="POST">
+                <div class="form-group">
+                    <label for="case_description" class="form-label">
+                        Detailed Case Description *
+                    </label>
+                    <textarea 
+                        id="case_description" 
+                        name="case_description" 
+                        class="form-textarea"
+                        placeholder="Please provide a comprehensive description of your legal case including:&#10;&#10;• Key facts and chronology of events&#10;• Parties involved and their relationships&#10;• Primary legal issues and claims&#10;• Relevant jurisdiction and applicable law&#10;• Desired outcomes and strategic objectives&#10;• Any relevant precedents or similar cases&#10;• Supporting evidence and documentation&#10;&#10;The more detailed and structured your input, the more precise and valuable our legal analysis will be. This information is protected under attorney-client privilege."
+                        required
+                        maxlength="10000"
+                    ></textarea>
+                    <div class="character-count">
+                        <span id="char-count">0</span> / 10,000 characters
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-button" id="submit-btn">
+                    <i class="fas fa-search"></i>
+                    <span>Generate Professional Analysis</span>
+                </button>
+            </form>
+        </section>
+
+        <!-- Results Section (Hidden by default) -->
+        <div class="results-section" id="results" style="display: none;">
+            <div class="results-container">
+                <!-- Executive Summary -->
+                <div class="result-card">
+                    <div class="result-header">
+                        <div class="result-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <h3 class="result-title">Executive Case Summary</h3>
+                    </div>
+                    <div class="result-content">
+                        <div class="result-text" id="case-summary">
+                            <!-- Summary content will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strategic Analysis -->
+                <div class="result-card">
+                    <div class="result-header">
+                        <div class="result-icon">
+                            <i class="fas fa-chess-knight"></i>
+                        </div>
+                        <h3 class="result-title">Strategic Legal Arguments</h3>
+                    </div>
+                    <div class="result-content">
+                        <div class="result-text" id="strategic-points">
+                            <!-- Strategic points will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Court Questions -->
+                <div class="result-card">
+                    <div class="result-header">
+                        <div class="result-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <h3 class="result-title">Recommended Court Questions</h3>
+                    </div>
+                    <div class="result-content">
+                        <div class="result-text" id="court-questions">
+                            <!-- Court questions will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-brand">LegalCounsel Pro</div>
+        <p class="footer-text">
+            Professional Legal AI Solutions | © 2025 All Rights Reserved<br>
+            Confidential Attorney Work Product | Protected by Professional Standards
+        </p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const textarea = document.getElementById('case_description');
+            const charCount = document.getElementById('char-count');
+            const submitBtn = document.getElementById('submit-btn');
+            const form = document.querySelector('.input-form');
+            const resultsSection = document.getElementById('results');
+
+            // Character counter
+            if (textarea && charCount) {
+                textarea.addEventListener('input', function() {
+                    const count = this.value.length;
+                    charCount.textContent = count.toLocaleString();
+                    
+                    // Auto-resize textarea
+                    this.style.height = 'auto';
+                    this.style.height = Math.max(200, this.scrollHeight) + 'px';
+                    
+                    // Update character count color
+                    if (count > 9000) {
+                        charCount.style.color = 'var(--warning-color)';
+                    } else if (count > 9500) {
+                        charCount.style.color = 'var(--accent-color)';
+                    } else {
+                        charCount.style.color = 'var(--text-secondary)';
+                    }
+                });
+            }
+
+            // Form submission
+            if (form && submitBtn) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    if (!textarea.value.trim()) {
+                        alert('Please provide a case description before submitting.');
+                        return;
+                    }
+                    
+                    // Show loading state
+                    document.body.classList.add('loading');
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner spinner"></i><span>Analyzing Case...</span>';
+                    
+                    // Simulate processing (replace with actual form submission)
+                    setTimeout(() => {
+                        showResults(textarea.value);
+                        document.body.classList.remove('loading');
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<i class="fas fa-search"></i><span>Generate Professional Analysis</span>';
+                    }, 3000);
+                });
+            }
+
+            function showResults(caseDescription) {
+                // Populate results (this would normally come from server)
+                document.getElementById('case-summary').innerHTML = 
+                    `<p><strong>Case Overview:</strong> ${caseDescription.substring(0, 200)}...</p>`;
+                
+                document.getElementById('strategic-points').innerHTML = 
+                    `<ul class="result-list">
+                        <li>Establish clear factual foundation through comprehensive documentation</li>
+                        <li>Identify applicable legal precedents and statutory framework</li>
+                        <li>Develop compelling narrative that supports primary legal theory</li>
+                        <li>Address potential counterarguments proactively</li>
+                        <li>Prepare evidence chain and witness testimony strategy</li>
+                    </ul>`;
+                
+                document.getElementById('court-questions').innerHTML = 
+                    `<ul class="result-list">
+                        <li>What specific legal standard should the court apply in this matter?</li>
+                        <li>How do the established facts support the requested relief?</li>
+                        <li>What precedential authority governs this legal issue?</li>
+                        <li>How should the court weigh competing policy considerations?</li>
+                        <li>What remedy would best serve the interests of justice?</li>
+                    </ul>`;
+                
+                // Show results with animation
+                resultsSection.style.display = 'block';
+                setTimeout(() => {
+                    resultsSection.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }, 100);
+            }
+
+            // Enhanced accessibility
+            textarea.addEventListener('keydown', function(e) {
+                if (e.key === 'Tab') {
+                    e.preventDefault();
+                    const start = this.selectionStart;
+                    const end = this.selectionEnd;
+                    this.value = this.value.substring(0, start) + '\t' + this.value.substring(end);
+                    this.selectionStart = this.selectionEnd = start + 1;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About LawBot - AI Legal Assistant</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #667eea 100%);
+            --accent-gradient: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            --gold-gradient: linear-gradient(45deg, #f6d365 0%, #fda085 100%);
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background Elements */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .floating-shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 6rem;
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .logo-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 800;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            animation: logoGlow 3s ease-in-out infinite alternate;
+            position: relative;
+        }
+
+        @keyframes logoGlow {
+            0% { filter: brightness(1) scale(1); }
+            100% { filter: brightness(1.2) scale(1.05); }
+        }
+
+        .logo-icon {
+            font-size: 3.5rem;
+            margin-right: 1rem;
+            display: inline-block;
+            animation: scaleUpDown 2s ease-in-out infinite;
+        }
+
+        @keyframes scaleUpDown {
+            0%, 100% { transform: scale(1) rotateY(0deg); }
+            50% { transform: scale(1.1) rotateY(180deg); }
+        }
+
+        .hero-title {
+            font-size: 2rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 6rem;
+        }
+
+        .feature-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideInUp 0.8s ease-out forwards;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.2s; }
+        .feature-card:nth-child(2) { animation-delay: 0.4s; }
+        .feature-card:nth-child(3) { animation-delay: 0.6s; }
+        .feature-card:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes slideInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .feature-list {
+            list-style: none;
+            text-align: left;
+        }
+
+        .feature-list li {
+            color: rgba(255, 255, 255, 0.9);
+            padding: 0.8rem 0;
+            position: relative;
+            padding-left: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: #4ecdc4;
+            font-size: 1.2rem;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+
+        .feature-list li:hover {
+            transform: translateX(10px);
+            color: white;
+        }
+
+        /* Mission Section */
+        .mission-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 4rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mission-section::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            animation: pulse 4s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+
+        .mission-title {
+            font-size: 3rem;
+            font-weight: 700;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .mission-text {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 2;
+            font-weight: 300;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 0.5rem;
+            animation: countUp 2s ease-out;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            background: rgba(255, 107, 107, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .disclaimer::before {
+            content: '⚠️';
+            font-size: 2rem;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: rgba(255, 107, 107, 0.2);
+            padding: 0.5rem;
+            border-radius: 50%;
+            animation: warning 2s ease-in-out infinite;
+        }
+
+        @keyframes warning {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .disclaimer h4 {
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .disclaimer p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.5rem 3rem;
+            background: var(--gold-gradient);
+            color: #1a202c;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Scroll Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .hero { padding: 3rem 1.5rem; margin-bottom: 4rem; }
+            .logo { font-size: 2.5rem; }
+            .hero-title { font-size: 1.5rem; }
+            .hero-subtitle { font-size: 1rem; }
+            .features-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .feature-card { padding: 2rem; }
+            .mission-section { padding: 2.5rem; }
+            .mission-title { font-size: 2rem; }
+            .mission-text { font-size: 1.1rem; }
+            .stats-section { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 480px) {
+            .logo { font-size: 2rem; }
+            .feature-icon { font-size: 3rem; }
+            .stat-number { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+    </div>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="logo-container">
+                <span class="logo-icon">⚖️</span>
+                <div class="logo">LawBot</div>
+            </div>
+            <div class="hero-title">Next-Generation AI Legal Assistant</div>
+            <div class="hero-subtitle">
+                Revolutionizing legal research with cutting-edge artificial intelligence, 
+                delivering precision, speed, and unparalleled insights for legal professionals worldwide.
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section scroll-reveal">
+            <div class="stat-card">
+                <span class="stat-number" data-target="10000">0</span>
+                <div class="stat-label">Legal Cases Analyzed</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" data-target="50">0</span>
+                <div class="stat-label">Jurisdictions Covered</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" data-target="99">0</span>
+                <div class="stat-label">Accuracy Rate (%)</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" data-target="24">0</span>
+                <div class="stat-label">Hours Available</div>
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3>Advanced AI Intelligence</h3>
+                <p>Leveraging state-of-the-art machine learning algorithms and neural networks trained on millions of legal documents.</p>
+                <ul class="feature-list">
+                    <li>Deep learning neural networks</li>
+                    <li>Natural language understanding</li>
+                    <li>Contextual legal reasoning</li>
+                    <li>Predictive case analysis</li>
+                    <li>Multi-language support</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📖</div>
+                <h3>Comprehensive Legal Database</h3>
+                <p>Access to the world's most extensive legal knowledge base spanning multiple jurisdictions and practice areas.</p>
+                <ul class="feature-list">
+                    <li>Supreme Court decisions</li>
+                    <li>Federal & state regulations</li>
+                    <li>International law treaties</li>
+                    <li>Legal precedents database</li>
+                    <li>Real-time legal updates</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Lightning-Fast Research</h3>
+                <p>Get comprehensive legal analysis in seconds, not hours. Accelerate your research with AI-powered insights.</p>
+                <ul class="feature-list">
+                    <li>Instant case law search</li>
+                    <li>Real-time citations</li>
+                    <li>Quick legal summaries</li>
+                    <li>Automated research briefs</li>
+                    <li>Smart query suggestions</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Enterprise-Grade Security</h3>
+                <p>Bank-level security protocols ensure complete confidentiality and protection of sensitive legal information.</p>
+                <ul class="feature-list">
+                    <li>256-bit encryption</li>
+                    <li>Zero-knowledge architecture</li>
+                    <li>GDPR & CCPA compliant</li>
+                    <li>Secure cloud infrastructure</li>
+                    <li>Audit trail logging</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Mission Section -->
+        <div class="mission-section scroll-reveal">
+            <h2 class="mission-title">Transforming Legal Practice</h2>
+            <p class="mission-text">
+                LawBot represents the convergence of artificial intelligence and legal expertise, designed to empower 
+                legal professionals with unprecedented research capabilities. Our mission is to democratize access to 
+                comprehensive legal knowledge while enhancing the efficiency and accuracy of legal research. By harnessing 
+                the power of advanced AI, we're not just improving how legal research is conducted – we're revolutionizing 
+                the entire legal landscape, making justice more accessible and legal practice more effective for everyone.
+            </p>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer scroll-reveal">
+            <h4>Important Legal Notice</h4>
+            <p>
+                LawBot provides AI-powered legal information and research assistance for educational and informational purposes only. 
+                The information provided does not constitute legal advice and should not be relied upon as such. Always consult 
+                with a qualified attorney for specific legal matters. LawBot does not create an attorney-client relationship and 
+                cannot replace professional legal counsel. Users are responsible for verifying the accuracy and applicability 
+                of any information provided.
+            </p>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <a href="#" class="cta-button">Experience LawBot Today</a>
+        </div>
+    </div>
+
+    <script>
+        // Advanced Animation Controller
+        class AnimationController {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.setupScrollReveal();
+                this.setupCounterAnimation();
+                this.setupParallaxEffect();
+                this.setupMouseTracker();
+            }
+
+            setupScrollReveal() {
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('revealed');
+                        }
+                    });
+                }, observerOptions);
+
+                document.querySelectorAll('.scroll-reveal').forEach(el => {
+                    observer.observe(el);
+                });
+            }
+
+            setupCounterAnimation() {
+                const counters = document.querySelectorAll('.stat-number');
+                const counterObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            this.animateCounter(entry.target);
+                            counterObserver.unobserve(entry.target);
+                        }
+                    });
+                });
+
+                counters.forEach(counter => {
+                    counterObserver.observe(counter);
+                });
+            }
+
+            animateCounter(element) {
+                const target = parseInt(element.getAttribute('data-target'));
+                const duration = 2000;
+                const start = performance.now();
+
+                const animate = (currentTime) => {
+                    const elapsed = currentTime - start;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                    const current = Math.floor(easeOutQuart * target);
+                    
+                    element.textContent = current.toLocaleString();
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        element.textContent = target.toLocaleString();
+                    }
+                };
+
+                requestAnimationFrame(animate);
+            }
+
+            setupParallaxEffect() {
+                window.addEventListener('scroll', () => {
+                    const scrolled = window.pageYOffset;
+                    const parallaxElements = document.querySelectorAll('.floating-shape');
+                    
+                    parallaxElements.forEach((element, index) => {
+                        const speed = (index + 1) * 0.5;
+                        element.style.transform = `translateY(${scrolled * speed}px)`;
+                    });
+                });
+            }
+
+            setupMouseTracker() {
+                document.addEventListener('mousemove', (e) => {
+                    const mouseX = e.clientX / window.innerWidth;
+                    const mouseY = e.clientY / window.innerHeight;
+                    
+                    const shapes = document.querySelectorAll('.floating-shape');
+                    shapes.forEach((shape, index) => {
+                        const speed = (index + 1) * 20;
+                        const x = mouseX * speed;
+                        const y = mouseY * speed;
+                        
+                        shape.style.transform += ` translate(${x}px, ${y}px)`;
+                    });
+                });
+            }
+        }
+
+        // Enhanced Feature Card Interactions
+        document.addEventListener('DOMContentLoaded', () => {
+            new AnimationController();
+
+            // Advanced hover effects for feature cards
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach(card => {
+                card.addEventListener('mouseenter', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                });
+
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (centerX - x) / 10;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px) scale(1.02)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
+                });
+            });
+
+            // Dynamic gradient animation
+            let gradientAngle = 0;
+            setInterval(() => {
+                gradientAngle += 1;
+                document.documentElement.style.setProperty('--gradient-angle', `${gradientAngle}deg`);
+            }, 50);
+
+            // Smooth scroll for internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

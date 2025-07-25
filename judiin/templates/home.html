@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lawyer Connect - Professional Legal Network</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #3182ce;
+            --accent-color: #e53e3e;
+            --success-color: #38a169;
+            --warning-color: #dd6b20;
+            --light-bg: #f7fafc;
+            --card-bg: #ffffff;
+            --text-primary: #1a202c;
+            --text-secondary: #718096;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --border-radius: 16px;
+            --border-radius-sm: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --glow-color: rgba(49, 130, 206, 0.25);
+        }
+
+        /* Base styles and reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--light-bg);
+            scroll-behavior: smooth;
+        }
+        
+        /* Professional Header with Glass Effect */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 20px 0;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--glass-bg);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo h2 {
+            color: #fff;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            padding: 8px 16px;
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: #fff;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            transform: translateY(-1px);
+        }
+
+        .nav-links a.login-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .nav-links a.login-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* Hero section with modern design */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--primary-color) 100%);
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, var(--glow-color) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, var(--glow-color) 0%, transparent 50%);
+        }
+
+        .hero-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 25px 25px, rgba(255,255,255,0.1) 2px, transparent 0),
+                radial-gradient(circle at 75px 75px, rgba(255,255,255,0.05) 2px, transparent 0);
+            background-size: 100px 100px;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+            color: #fff;
+        }
+        
+        .hero h1 {
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 32px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--warning-color), #f6ad55);
+            color: #fff;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #c05621, var(--warning-color));
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-secondary {
+            background: var(--glass-bg);
+            color: #fff;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* Professional Features section */
+        .features {
+            max-width: 1200px;
+            margin: 5rem auto;
+            padding: 0 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.75rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .section-title p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+        
+        /* Professional Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2447 100%);
+            color: #fff;
+            padding: 4rem 0 2rem;
+            margin-top: 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, var(--glow-color) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, var(--glow-color) 0%, transparent 50%);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--warning-color), #f6ad55);
+            border-radius: 2px;
+        }
+        
+        .footer-col p {
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-col ul li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .footer-col ul li a:hover {
+            color: #fff;
+            padding-left: 8px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .hero {
+                min-height: 500px;
+                padding: 2rem 0;
+            }
+            
+            .hero-content {
+                padding: 0 1rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .features {
+                margin: 3rem auto;
+                padding: 0 1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+
+        /* Scroll animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .feature-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .feature-card:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <div class="logo-icon">⚖️</div>
+                <h2>Lawyer Connect</h2>
+            </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Contact</a>
+                <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="hero-pattern"></div>
+        <div class="hero-content">
+            <h1>Build Your <span>Legal Practice</span></h1>
+            <p>Join our network of legal professionals to showcase your expertise, connect with clients, and grow your practice in the digital age.</p>
+            <div class="cta-buttons">
+                <a href="{{ url_for('signup') }}" class="btn btn-primary">
+                    <span>Create Your Profile</span>
+                    <span>→</span>
+                </a>
+                <a href="{{ url_for('login') }}" class="btn btn-secondary">
+                    <span>Login</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="section-title">
+            <h2>Why Join Lawyer Connect?</h2>
+            <p>Discover the benefits of being part of our professional legal network</p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚖️</div>
+                <h3>Find Quality Cases</h3>
+                <p>Access a curated selection of legal cases that match your expertise and interests. Our intelligent matching system connects you with the right opportunities.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👤</div>
+                <h3>Professional Profile</h3>
+                <p>Create a comprehensive profile showcasing your skills, experience, and success stories. Stand out in the competitive legal marketplace.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>Grow Your Practice</h3>
+                <p>Expand your client base and establish your reputation in the legal community. Track your success and build lasting professional relationships.</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>About Lawyer Connect</h3>
+                <p>Lawyer Connect is a premium professional platform connecting skilled attorneys with clients seeking exceptional legal representation. We're transforming how legal services are discovered and delivered.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <p>Email: info@lawyerconnect.com</p>
+                <p>Phone: (555) 123-4567</p>
+                <p>Address: 123 Legal Ave, Suite 100<br>Professional District, NY 10001</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Lawyer Connect. All rights reserved. | Designed for legal professionals.</p>
+        </div>
+    </footer>
+</body>
+</html>
