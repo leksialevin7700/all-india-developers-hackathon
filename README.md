@@ -69,6 +69,24 @@ With ParaLegal AI, we want to make legal help:
 
 ➡️And most importantly, human-centered
 
+Snaphots of the features present in ParaLegal AI:
+![WhatsApp Image 2025-07-26 at 12 19 13_43975f14](https://github.com/user-attachments/assets/b561de0c-897e-416d-af18-d2933b4ad3f4)
+
+![WhatsApp Image 2025-07-26 at 12 20 28_66bfc346](https://github.com/user-attachments/assets/06a43ebf-eea4-44f0-884c-0b1f571069c7)
+
+![WhatsApp Image 2025-07-26 at 12 21 09_ea573cc5](https://github.com/user-attachments/assets/2906d58b-df83-41c1-863a-0c16331eb07f)
+
+![WhatsApp Image 2025-07-26 at 12 21 41_5d53483e](https://github.com/user-attachments/assets/e18b475b-82cd-4058-8b9e-4dc8f7176126)
+
+![WhatsApp Image 2025-07-26 at 12 22 00_895eb72e](https://github.com/user-attachments/assets/05903df4-b4bf-449d-a086-33e3bd833917)
+
+![WhatsApp Image 2025-07-26 at 12 23 48_dbcd1b90](https://github.com/user-attachments/assets/12eb63a8-2f07-430a-b882-df43b573549f)
+
+![WhatsApp Image 2025-07-26 at 12 24 50_a0e34566](https://github.com/user-attachments/assets/acd0ed68-7248-43c4-b7a9-fea94b340060)
+
+![WhatsApp Image 2025-07-26 at 12 27 14_7e815dab](https://github.com/user-attachments/assets/ad70df3f-0a8d-4377-a7c0-08c4c47a30bc)
+
+
 Final Thoughts
 This isn’t just another app. It’s a step toward making sure no one is left out of the justice system just because they didn’t know where to start.
 
