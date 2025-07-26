@@ -93,3 +93,4 @@ This isn’t just another app. It’s a step toward making sure no one is left o
 So yeah — call us the creators of ParaLegal AI with pride 😊
 Because we’re not just building a project — we’re building hope, support, and access for millions.
 Demo video - https://youtu.be/QlP6YUpzQVE
+Blog - https://morpho.hashnode.dev/paralegal-ai-making-legal-help-human-affordable-and-always-available
